@@ -1,4 +1,5 @@
 FROM python:3.11-slim-bookworm AS builder
+USER root
 ARG REBUILD_HNSWLIB
 RUN apt-get update --fix-missing && apt-get install -y --fix-missing \
     build-essential \
@@ -34,7 +35,7 @@ ENV CHROMA_HOST_PORT 8000
 ENV CHROMA_WORKERS 1
 ENV CHROMA_LOG_CONFIG "chromadb/log_config.yml"
 ENV CHROMA_TIMEOUT_KEEP_ALIVE 30
-
+USER 1001
 EXPOSE 8000
 
 ENTRYPOINT ["/docker_entrypoint.sh"]
